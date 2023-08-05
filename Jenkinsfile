@@ -59,9 +59,5 @@ pipeline{
                 }
             }
         }
-        stage('Tring CD pipeline'){
-                echo "triggering updatemanifestjob"
-                build job: 'gitops-argocd_CD', parameters: [string(name: 'IMAGE_TAG', value: env.IMAGE_TAG)]
-        }
     }
 }
