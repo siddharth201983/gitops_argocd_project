@@ -59,5 +59,12 @@ pipeline{
                 }
             }
         }
+        stage('Trigger CD Pipelibe'){
+            steps{
+                script{
+                    sh "curl -v -k --user siddharth:1121379df1b472667f5f16774e391b43c4 -X POST -H 'cache-control:no-cache' -H 'content-type:application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://34.203.200.32:8080/job/gitops-argocd_CD/buildWithParameters?token=gitops-config'"
+                }
+            }
+        }
     }
 }
