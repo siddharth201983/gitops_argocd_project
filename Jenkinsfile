@@ -10,7 +10,6 @@ pipeline{
         IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
         REGISTRY_CREDS = "dockerhub"
 
-
     }
 
     stages{
@@ -57,6 +56,17 @@ pipeline{
                 script{
                     sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+        stage('Update k8s manifest files'){
+            steps{
+                script{
+                    sh """
+                    cat deployment.yaml
+                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                    cat deployment.yaml
+                    """
                 }
             }
         }
